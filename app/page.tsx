@@ -25,9 +25,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
     path: "/api/hello",
     description: "Public API with POST data",
     requiresAuth: false,
-    body: [
-      { name: "message", type: "string", required: false },
-    ],
+    body: [{ name: "message", type: "string", required: false }],
   },
   {
     method: "GET",
@@ -91,9 +89,7 @@ const API_ENDPOINTS: ApiEndpoint[] = [
     description: "Delete user (Admin only)",
     requiresAuth: true,
     requiresAdmin: true,
-    params: [
-      { name: "id", type: "string", required: true },
-    ],
+    params: [{ name: "id", type: "string", required: true }],
   },
 ];
 
@@ -134,7 +130,10 @@ export default function Home() {
       };
 
       // Add body for POST/PATCH/PUT requests
-      if (["POST", "PATCH", "PUT"].includes(selectedApi.method) && selectedApi.body) {
+      if (
+        ["POST", "PATCH", "PUT"].includes(selectedApi.method) &&
+        selectedApi.body
+      ) {
         const body: Record<string, any> = {};
         selectedApi.body.forEach((field) => {
           if (bodyParams[field.name]) {
@@ -147,7 +146,7 @@ export default function Home() {
 
       const res = await fetch(url, options);
       const data = await res.json();
-      
+
       setApiResponse({
         status: res.status,
         statusText: res.statusText,
@@ -401,7 +400,9 @@ export default function Home() {
                             </span>
                           </label>
                           <input
-                            type={param.type === "password" ? "password" : "text"}
+                            type={
+                              param.type === "password" ? "password" : "text"
+                            }
                             value={bodyParams[param.name] || ""}
                             onChange={(e) =>
                               setBodyParams({
