@@ -246,29 +246,26 @@ export default function Home() {
                     key={index}
                     onClick={() => handleSelectApi(api)}
                     disabled={!canAccess}
-                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                      isSelected
+                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${isSelected
                         ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                         : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                    } ${
-                      !canAccess
+                      } ${!canAccess
                         ? "opacity-50 cursor-not-allowed"
                         : "cursor-pointer"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span
-                            className={`px-2 py-0.5 text-xs font-semibold rounded ${
-                              api.method === "GET"
+                            className={`px-2 py-0.5 text-xs font-semibold rounded ${api.method === "GET"
                                 ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                                 : api.method === "POST"
-                                ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                                : api.method === "PATCH"
-                                ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                                : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                            }`}
+                                  ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                                  : api.method === "PATCH"
+                                    ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                                    : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                              }`}
                           >
                             {api.method}
                           </span>
@@ -324,15 +321,14 @@ export default function Home() {
                 <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <span
-                      className={`px-2 py-1 text-sm font-semibold rounded ${
-                        selectedApi.method === "GET"
+                      className={`px-2 py-1 text-sm font-semibold rounded ${selectedApi.method === "GET"
                           ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                           : selectedApi.method === "POST"
-                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-                          : selectedApi.method === "PATCH"
-                          ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-                          : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                      }`}
+                            ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                            : selectedApi.method === "PATCH"
+                              ? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+                              : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                        }`}
                     >
                       {selectedApi.method}
                     </span>
@@ -436,13 +432,12 @@ export default function Home() {
                         Response
                       </h3>
                       <span
-                        className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                          apiResponse.status >= 200 && apiResponse.status < 300
+                        className={`px-3 py-1 rounded-full text-sm font-semibold ${apiResponse.status >= 200 && apiResponse.status < 300
                             ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
                             : apiResponse.status >= 400
-                            ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-                            : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
-                        }`}
+                              ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
+                              : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+                          }`}
                       >
                         {apiResponse.status} {apiResponse.statusText}
                       </span>
