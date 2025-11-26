@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
-import { 
-  successResponse, 
-  errorResponse, 
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import {
+  successResponse,
+  errorResponse,
   unauthorizedResponse,
-  forbiddenResponse 
-} from '@/lib/api-utils';
-import { validateRequired } from '@/lib/validation';
+  forbiddenResponse,
+} from "@/lib/api-utils";
+import { validateRequired } from "@/lib/validation";
 
 /**
  * GET /api/admin/users
@@ -21,23 +21,23 @@ export async function GET(request: Request) {
     return unauthorizedResponse();
   }
 
-  if (session.user.role !== 'admin') {
-    return forbiddenResponse('Admin access required');
+  if (session.user.role !== "admin") {
+    return forbiddenResponse("Admin access required");
   }
 
   try {
     const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
-    const search = searchParams.get('search') || '';
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const search = searchParams.get("search") || "";
 
     const skip = (page - 1) * limit;
 
     const where = search
       ? {
           OR: [
-            { name: { contains: search, mode: 'insensitive' as const } },
-            { email: { contains: search, mode: 'insensitive' as const } },
+            { name: { contains: search, mode: "insensitive" as const } },
+            { email: { contains: search, mode: "insensitive" as const } },
           ],
         }
       : {};
@@ -60,7 +60,7 @@ export async function GET(request: Request) {
             },
           },
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
       }),
       prisma.user.count({ where }),
     ]);
@@ -75,8 +75,8 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching users:', error);
-    return errorResponse('Failed to fetch users', 500);
+    console.error("Error fetching users:", error);
+    return errorResponse("Failed to fetch users", 500);
   }
 }
 
@@ -91,8 +91,8 @@ export async function PATCH(request: Request) {
     return unauthorizedResponse();
   }
 
-  if (session.user.role !== 'admin') {
-    return forbiddenResponse('Admin access required');
+  if (session.user.role !== "admin") {
+    return forbiddenResponse("Admin access required");
   }
 
   try {
@@ -101,7 +101,7 @@ export async function PATCH(request: Request) {
 
     validateRequired({ userId, role });
 
-    if (!['user', 'admin'].includes(role)) {
+    if (!["user", "admin"].includes(role)) {
       return errorResponse('Invalid role. Must be "user" or "admin"', 400);
     }
 
@@ -116,18 +116,18 @@ export async function PATCH(request: Request) {
       },
     });
 
-    return successResponse({ 
-      message: 'User role updated successfully',
-      user 
+    return successResponse({
+      message: "User role updated successfully",
+      user,
     });
   } catch (error: any) {
-    console.error('Error updating user:', error);
-    
-    if (error.code === 'P2025') {
-      return errorResponse('User not found', 404);
+    console.error("Error updating user:", error);
+
+    if (error.code === "P2025") {
+      return errorResponse("User not found", 404);
     }
-    
-    return errorResponse('Failed to update user', 500);
+
+    return errorResponse("Failed to update user", 500);
   }
 }
 
@@ -142,37 +142,37 @@ export async function DELETE(request: Request) {
     return unauthorizedResponse();
   }
 
-  if (session.user.role !== 'admin') {
-    return forbiddenResponse('Admin access required');
+  if (session.user.role !== "admin") {
+    return forbiddenResponse("Admin access required");
   }
 
   try {
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('id');
+    const userId = searchParams.get("id");
 
     if (!userId) {
-      return errorResponse('User ID is required', 400);
+      return errorResponse("User ID is required", 400);
     }
 
     // Prevent admin from deleting themselves
     if (userId === session.user.id) {
-      return errorResponse('Cannot delete your own account', 400);
+      return errorResponse("Cannot delete your own account", 400);
     }
 
     await prisma.user.delete({
       where: { id: userId },
     });
 
-    return successResponse({ 
-      message: 'User deleted successfully' 
+    return successResponse({
+      message: "User deleted successfully",
     });
   } catch (error: any) {
-    console.error('Error deleting user:', error);
-    
-    if (error.code === 'P2025') {
-      return errorResponse('User not found', 404);
+    console.error("Error deleting user:", error);
+
+    if (error.code === "P2025") {
+      return errorResponse("User not found", 404);
     }
-    
-    return errorResponse('Failed to delete user', 500);
+
+    return errorResponse("Failed to delete user", 500);
   }
 }
